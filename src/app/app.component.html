@@ -1,0 +1,41 @@
+<div class="container">
+  <app-user-editor></app-user-editor>
+  <!-- View Mode -->
+  <h1>
+    {{title}}
+  </h1>
+  <section *ngIf="!isEditMode">
+    <h1>Detail</h1>
+    <div>
+      <b>Name:</b>{{user.name}}
+      <b>Age:</b>{{user.age}}<br/>
+      <b>Weight:</b>{{user.weight}}
+      <b>Height:</b>{{user.height}}
+      <b>BMI:</b>{{user.getBMI()}}
+      <span *ngIf="user.isHealthy()">Yay!</span>
+      <b>Healthy:</b>{{user.isHealthy()}}<br/>
+      <button class="btn btn-primary" (click)="toggleEdit()">EDIT</button>
+    </div>
+    <!-- add edit button -->
+  </section>
+  <!-- Edit Mode -->
+  <section *ngIf="isEditMode">
+    <button (click)="toggleEdit()">BACK</button>
+    <h2>Editor</h2>
+    <pre>{{user | json}}</pre>
+    <div>
+      <input type="text" [(ngModel)]="user.name" /><br/>
+      <input type="number" [(ngModel)]="user.age" /><br/>
+      <input type="number" [(ngModel)]="user.weight" /><br/>
+      <input type="number" [(ngModel)]="user.height" /><br/>
+      <b>BMI:</b>{{user.getBMI()}}
+      <span *ngIf="user.isHealthy()">Yay!</span>
+      <button (click)="onCheckAge()">
+      Check Age
+    </button>
+      <button (click)="onCheckBMI()">
+      Check BMI
+    </button>
+    </div>
+  </section>
+</div>
