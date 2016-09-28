@@ -5,15 +5,27 @@
     {{title}}
   </h1>
   <section *ngIf="!isEditMode">
+    <ul>
+      <li *ngFor="let item of users; let i = index" (click)="selectedUser = item">
+        {{i}} : {{item.name}} <span>{{item.age}}</span><button (click)="deleteUser(i)">x</button>
+      </li>
+    </ul>
+
+    <button (click)="deleteUser(0)"> Remove index 0 Member </button>
+    <button (click)="addUser(0)"> Add User </button>
+    <div>
+      Sum Age: {{users | sumPipe | myPipe}}
+    </div>
+    <pre>{{users|filterPipe|json}}</pre>
     <h1>Detail</h1>
     <div>
-      <b>Name:</b>{{user.name}}
-      <b>Age:</b>{{user.age}}<br/>
-      <b>Weight:</b>{{user.weight}}
-      <b>Height:</b>{{user.height}}
-      <b>BMI:</b>{{user.getBMI()}}
-      <span *ngIf="user.isHealthy()">Yay!</span>
-      <b>Healthy:</b>{{user.isHealthy()}}<br/>
+      <b>Name:</b>{{selectedUser.name}}
+      <b>Age:</b>{{selectedUser.age | myPipe}}<br/>
+      <b>Weight:</b>{{selectedUser.weight}}
+      <b>Height:</b>{{selectedUser.height}}
+      <b>BMI:</b>{{selectedUser.getBMI()}}
+      <span *ngIf="selectedUser.isHealthy()">Yay!</span>
+      <b>Healthy:</b>{{selectedUser.isHealthy()}}<br/>
       <button class="btn btn-primary" (click)="toggleEdit()">EDIT</button>
     </div>
     <!-- add edit button -->
@@ -22,14 +34,14 @@
   <section *ngIf="isEditMode">
     <button (click)="toggleEdit()">BACK</button>
     <h2>Editor</h2>
-    <pre>{{user | json}}</pre>
+    <pre>{{selectedUser | json}}</pre>
     <div>
-      <input type="text" [(ngModel)]="user.name" /><br/>
-      <input type="number" [(ngModel)]="user.age" /><br/>
-      <input type="number" [(ngModel)]="user.weight" /><br/>
-      <input type="number" [(ngModel)]="user.height" /><br/>
-      <b>BMI:</b>{{user.getBMI()}}
-      <span *ngIf="user.isHealthy()">Yay!</span>
+      <input type="text" [(ngModel)]="selectedUser.name" /><br/>
+      <input type="number" [(ngModel)]="selectedUser.age" /><br/>
+      <input type="number" [(ngModel)]="selectedUser.weight" /><br/>
+      <input type="number" [(ngModel)]="selectedUser.height" /><br/>
+      <b>BMI:</b>{{selectedUser.getBMI()}}
+      <span *ngIf="selectedUser.isHealthy()">Yay!</span>
       <button (click)="onCheckAge()">
       Check Age
     </button>
